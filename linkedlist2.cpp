@@ -19,6 +19,8 @@ int main(){
   deleteStudent(head);
   print(head);*/
   char input[128];
+  cout << "Enter \"ADD\" to add a new student entry, \"PRINT\" to print out the current list of students, or \"DELETE\" to delete a student entry." << endl;
+  cout << "Enter \"q\" at any time to quit the program." << endl;
   while(true){ //Primary loop
     cout << "Type a command: ";
     cin >> input;
@@ -72,6 +74,10 @@ void deleteStudent(Node* &head){
   cout << "Type the ID of the student to delete: ";
   cin >> id;
   cout << endl;
+  if(head == NULL){
+    cout << "The list is empty." << endl;
+    return;
+  }
   Node* prev = NULL, *current = head;
   while(true){
     if(current->getData()->id == id){
