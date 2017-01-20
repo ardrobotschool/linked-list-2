@@ -5,7 +5,7 @@ node containing void pointer to data and pointer to next node
 #ifndef NODE_HPP
 #define NODE_HPP
 
-#include "student.hpp"
+#include "Student.hpp"
 
 class Node {
 	public:
