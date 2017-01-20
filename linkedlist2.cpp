@@ -122,10 +122,9 @@ void newStudent(Node* &head){
 }
 
 void eraseAll(Node* &head){
-  Node* prev;
-  while(head!=NULL){
-    prev = head;
-    head = head->getNext();
-    delete prev;
+  if(head!=NULL){
+    Node* next = head->getNext();
+    delete head;
+    eraseAll(next);
   }
 }
