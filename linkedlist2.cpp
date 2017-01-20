@@ -31,7 +31,7 @@ int main(){
       input[i] = tolower(input[i]);
       i++;
     }
-    if(strcmp(input, "q") == 0){//quit
+    if(strcmp(input, "q") == 0 || strcmp(input, "quit") == 0){//quit
       //Wipe everything--delete every student in the list.
       eraseAll(head);
       return 0;
@@ -57,14 +57,14 @@ void add(Student* student, Node* &head){
   head = node;
 }
 
-void print(Node* head){
-  while(head != NULL){
-    cout << head->getData()->lname << ", " << head->getData()->fname << " (" << head->getData()->id << ") GPA:";
+void print(Node* current){
+  if(current != NULL){
+    cout << current->getData()->lname << ", " << current->getData()->fname << " (" << current->getData()->id << ") GPA:";
     cout.setf(ios::fixed, ios::floatfield);
     cout.setf(ios::showpoint);
     cout.precision(2);
-    cout << head->getData()->gpa << "." << endl;
-    head = head->getNext();
+    cout << current->getData()->gpa << "." << endl;
+    print(current->getNext());
   }
 }
 
