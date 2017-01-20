@@ -4,8 +4,17 @@
 
 using namespace std;
 
+void add(Student* student, Node* &head);
+void print(Node* head);
+void deleteStudent(int id, Node* &head);
+void newStudent(Node* &head);
+
 int main(){
   Node* head = NULL;
+  add(new Student("Danila", "Fedorin", 3.76, 452434), head);
+  add(new Student("Artur", "Drobot", 3.86, 405502), head);
+  add(new Student("Jason", "Galbraith", 5.00, 999555), head);
+  print(head);
 }
 
 void add(Student* student, Node* &head){
@@ -16,7 +25,11 @@ void add(Student* student, Node* &head){
 
 void print(Node* head){
   while(head != NULL){
-    cout << head->getStudent()->getFirstName() << endl;
+    cout << head->getData()->lname << ", " << head->getData()->fname << " (" << head->getData()->id << ") GPA:";
+    cout.setf(ios::fixed, ios::floatfield);
+    cout.setf(ios::showpoint);
+    cout.precision(2);
+    cout << head->getData()->gpa << "." << endl;
     head = head->getNext();
   }
 }
@@ -24,7 +37,7 @@ void print(Node* head){
 void deleteStudent(int id, Node* &head){
   Node* prev = NULL, *current = head;
   while(true){
-    if(current->getStudent()->id == id){
+    if(current->getData()->id == id){
       if(prev!=NULL){
 	prev->setNext(current->getNext());
       }
@@ -42,4 +55,23 @@ void deleteStudent(int id, Node* &head){
       return;
     }
   }
+}
+
+void newStudent(Node* &head){
+  char* fname = new char[128], *lname = new char[128];
+  float gpa;
+  int id;
+  cout << "Enter student\'s first name: ";
+  cin >> fname;
+  cout << endl;
+  cout << "Enter student\'s last name: ";
+  cin >> lname;
+  cout << endl;
+  cout << "Enter student\'s ID: ";
+  cin >> id;
+  cout << endl;
+  cout << "Enter student\'s GPA: ";
+  cin >> gpa;
+  cout << endl;
+  add(new Student(fname, lname, gpa, id), head);
 }

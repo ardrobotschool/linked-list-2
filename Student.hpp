@@ -4,8 +4,12 @@
 
 class Student {
 public:
-  const char* name;
+  const char* fname;
+  const char* lname;
   float gpa;
+  int id;
+  Student(char* fname, char* lname, float gpa, int id);
+  ~Student();
 };
 
 #endif
