@@ -6,7 +6,7 @@ using namespace std;
 
 void add(Student* student, Node* &head);
 void print(Node* head);
-void deleteStudent(int id, Node* &head);
+void deleteStudent(Node* &head);
 void newStudent(Node* &head);
 
 int main(){
@@ -14,6 +14,7 @@ int main(){
   add(new Student("Danila", "Fedorin", 3.76, 452434), head);
   add(new Student("Artur", "Drobot", 3.86, 405502), head);
   add(new Student("Jason", "Galbraith", 5.00, 999555), head);
+  deleteStudent(head);
   print(head);
 }
 
@@ -34,7 +35,12 @@ void print(Node* head){
   }
 }
 
-void deleteStudent(int id, Node* &head){
+void deleteStudent(Node* &head){
+  //Get an id.
+  int id;
+  cout << "Type the ID of the student to delete: ";
+  cin >> id;
+  cout << endl;
   Node* prev = NULL, *current = head;
   while(true){
     if(current->getData()->id == id){
@@ -45,6 +51,7 @@ void deleteStudent(int id, Node* &head){
 	head = current->getNext();
       }
       delete current;
+      cout << "Student removed form the database." << endl;
       return;
     }
     if(current->getNext() != NULL){
@@ -52,6 +59,7 @@ void deleteStudent(int id, Node* &head){
       current = current->getNext();
     }
     else{
+      cout << "No student found with the given ID." << endl;
       return;
     }
   }
