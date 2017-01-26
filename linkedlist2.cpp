@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void add(Student* &student, Node** current);
+void add(Student* &student, Node* &head);
 void print(Node* head);
 void deleteStudent(Node* &head);
 void newStudent(Node* &head);
@@ -15,10 +15,12 @@ int main(){
   Node* head = NULL;
   Node** ptr = &head;
   Student* danila = new Student("Danila", "Fedorin", 3.76, 452434);
-  add(danila, ptr);
+  //add(danila, ptr);
   //add(new Student("Artur", "Drobot", 3.86, 405502), ptr);
   //add(new Student("Jason", "Galbraith", 5.00, 999555), ptr);
   //deleteStudent(head);
+  Node *node = new Node(danila);
+  cout << node->getNext() << endl;
   print(head);
   char input[128];
   cout << "Enter \"ADD\" to add a new student entry, \"PRINT\" to print out the current list of students, or \"DELETE\" to delete a student entry." << endl;
@@ -53,12 +55,27 @@ int main(){
   }
 }
 
-void add(Student* &student, Node** current){
-  if((*current) == NULL || (*current)->getData()->id >= student->id){
-    Node *node = new Node(student);
-    node->setNext((*current));
-    (*current) = node;
+void add(Student* &student, Node* &current){
+  if(current == NULL){ //current == head
+    Node* node = new Node(student);
+    node -> setNext(NULL);
+    current = node;
+    return;
   }
+  if(current->getNext() == NULL){
+    Node* node = new Node(student);
+    node->setNext(NULL);
+    current->setNext(node);
+    return;
+  }
+  if(student->id <= current->getNext()->getData()->id){
+    Node* node = new Node(student);
+    node->setNext(current->getNext());
+    current->setNext(node);
+    return;
+  }
+  Node* next = current->getNext();
+  add(student, next);
 }
 
 void print(Node* current){
@@ -123,9 +140,8 @@ void newStudent(Node* &head){
   cout << "Enter student\'s GPA: ";
   cin >> gpa;
   cout << endl;
-  Node** ptr = &head;
   Student *student = new Student(fname, lname, gpa, id);
-  add(student, ptr);
+  add(student, head);
 }
 
 void eraseAll(Node* &head){
