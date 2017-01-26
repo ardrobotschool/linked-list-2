@@ -64,8 +64,14 @@ void add(Student* &student, Node* &current){
   }
   if(current->getNext() == NULL){
     Node* node = new Node(student);
-    node->setNext(NULL);
-    current->setNext(node);
+    if(student->id >= current->getData()->id){
+      node->setNext(NULL);
+      current->setNext(node);
+    }
+    else{ //current == head
+      node->setNext(current);
+      current = node;
+    }
     return;
   }
   if(student->id <= current->getNext()->getData()->id){
@@ -86,6 +92,7 @@ void print(Node* current){
     cout.precision(2);
     cout << current->getData()->gpa << "." << endl;
     print(current->getNext());
+    cout << endl;
   }
 }
 
