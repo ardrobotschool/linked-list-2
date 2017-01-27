@@ -7,7 +7,7 @@ using namespace std;
 
 void add(Student* &student, Node* &head);
 void print(Node* head);
-void deleteStudent(Node* &head);
+void deleteStudent(int id, Node* &head, Node* &null);
 void newStudent(Node* &head);
 void eraseAll(Node* &head);
 
@@ -47,7 +47,16 @@ int main(){
       print(head);
     }
     else if(strcmp(input, "delete") == 0){
-      deleteStudent(head);
+      //Get an id.
+      int id;
+      cout << "Type the ID of the student to delete: ";
+      cin >> id;
+      cout << endl;
+      if(head == NULL){
+	cout << "The list is empty." << endl;
+	return;	
+      }
+      deleteStudent(id, head, NULL);
     }
     else{
       cout << "Command not found." << endl;
@@ -96,38 +105,12 @@ void print(Node* current){
   }
 }
 
-void deleteStudent(Node* &head){
-  //Get an id.
-  int id;
-  cout << "Type the ID of the student to delete: ";
-  cin >> id;
-  cout << endl;
-  if(head == NULL){
-    cout << "The list is empty." << endl;
+void deleteStudent(int id, Node* &current, Node* &prev){
+  if(current == NULL){
     return;
-
   }
-  Node* prev = NULL, *current = head;
-  while(true){
-    if(current->getData()->id == id){
-      if(prev!=NULL){
-	prev->setNext(current->getNext());
-      }
-      else{
-	head = current->getNext();
-      }
-      delete current;
-      cout << "Student removed form the database." << endl;
-      return;
-    }
-    if(current->getNext() != NULL){
-      prev = current;
-      current = current->getNext();
-    }
-    else{
-      cout << "No student found with the given ID." << endl;
-      return;
-    }
+  if(current->getData()->id == id){
+    
   }
 }
 
