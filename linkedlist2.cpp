@@ -158,3 +158,12 @@ void eraseAll(Node* &head){
     eraseAll(next);
   }
 }
+
+int avg(Node* node, int currAvg, int count){
+	if(node == NULL){
+		return currAvg;
+	}
+	if(currAvg == -1){
+		//return avg(node->getNext(), 
+	}
+}
