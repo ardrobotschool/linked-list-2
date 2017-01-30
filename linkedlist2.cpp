@@ -7,20 +7,20 @@ using namespace std;
 
 void add(Student* &student, Node* &head);
 void print(Node* head);
-void deleteStudent(int id, Node* &head, Node* &null);
+bool deleteStudent(int id, Node* &head, Node* null);
 void newStudent(Node* &head);
 void eraseAll(Node* &head);
 
 int main(){
   Node* head = NULL;
   Node** ptr = &head;
-  Student* danila = new Student("Danila", "Fedorin", 3.76, 452434);
+  //Student* danila = new Student("Danila", "Fedorin", 3.76, 452434);
   //add(danila, ptr);
   //add(new Student("Artur", "Drobot", 3.86, 405502), ptr);
   //add(new Student("Jason", "Galbraith", 5.00, 999555), ptr);
   //deleteStudent(head);
-  Node *node = new Node(danila);
-  cout << node->getNext() << endl;
+  //Node *node = new Node(danila);
+  //cout << node->getNext() << endl;
   print(head);
   char input[128];
   cout << "Enter \"ADD\" to add a new student entry, \"PRINT\" to print out the current list of students, or \"DELETE\" to delete a student entry." << endl;
@@ -53,10 +53,14 @@ int main(){
       cin >> id;
       cout << endl;
       if(head == NULL){
-	cout << "The list is empty." << endl;
-	return;	
+		cout << "The list is empty." << endl;
       }
-      deleteStudent(id, head, NULL);
+      else if(deleteStudent(id, head, NULL)){
+		cout << "Student deleted." << endl;
+	  }
+	  else{
+		cout << "No student found with given ID." << endl;
+	  }
     }
     else{
       cout << "Command not found." << endl;
@@ -105,12 +109,25 @@ void print(Node* current){
   }
 }
 
-void deleteStudent(int id, Node* &current, Node* &prev){
-  if(current == NULL){
-    return;
+bool deleteStudent(int id, Node* &current, Node* prev){
+  if(current == NULL){ //Reached end of list.
+    return false;
   }
   if(current->getData()->id == id){
-    
+    if(prev != NULL){
+		prev->setNext(current->getNext());
+		delete current;
+	}
+	else{ // Current == head
+		prev = current;
+		current = current->getNext();
+		delete prev;
+	}
+	return true;
+  }
+  else{
+	  Node* nextPtr = current->getNext();
+	  return deleteStudent(id, nextPtr, current);
   }
 }
 
