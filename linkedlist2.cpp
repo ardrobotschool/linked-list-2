@@ -10,6 +10,7 @@ void print(Node* head);
 bool deleteStudent(int id, Node* &head, Node* null);
 void newStudent(Node* &head);
 void eraseAll(Node* &head);
+float avg(Node* head, float curavg, int count);
 
 int main(){
   Node* head = NULL;
@@ -23,7 +24,7 @@ int main(){
   //cout << node->getNext() << endl;
   print(head);
   char input[128];
-  cout << "Enter \"ADD\" to add a new student entry, \"PRINT\" to print out the current list of students, or \"DELETE\" to delete a student entry." << endl;
+  cout << "Enter \"ADD\" to add a new student entry, \"PRINT\" to print out the current list of students, \"AVERAGE\" to print out the average GPA of all students in the list, or \"DELETE\" to delete a student entry." << endl;
   cout << "Enter \"q\" at any time to quit the program." << endl;
   while(true){ //Primary loop
     cout << "Type a command: ";
@@ -45,6 +46,14 @@ int main(){
     }
     else if(strcmp(input, "print") == 0){
       print(head);
+    }
+    else if(strcmp(input, "average") == 0){
+      if(head == NULL){
+	cout << "The list is empty." << endl;
+      }
+      else{
+	cout << avg(head, 777, 0) << endl;
+      }
     }
     else if(strcmp(input, "delete") == 0){
       //Get an id.
@@ -159,11 +168,10 @@ void eraseAll(Node* &head){
   }
 }
 
-int avg(Node* node, int currAvg, int count){
-	if(node == NULL){
-		return currAvg;
-	}
-	if(currAvg == -1){
-		//return avg(node->getNext(), 
-	}
+float avg(Node* node, float currAvg, int count){
+  //We assume that head != NULL.
+  if(node == NULL){
+    return currAvg;
+  }
+  return avg(node->getNext(), (node->getData()->gpa + currAvg*count)/(count + 1), count+1);
 }
