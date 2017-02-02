@@ -1,3 +1,7 @@
+/*
+ * The student list project using a linked list instead of a vector.
+ * Artur Drobot, finished 1 Feb. 2017.
+ */
 #include <iostream>
 #include "Node.hpp"
 #include "Student.hpp"
@@ -78,6 +82,9 @@ int main(){
 }
 
 void add(Student* &student, Node *& head, Node* &current){
+  //We only add it if it's in the right position.
+  //We need 9999999993727632227 special cases b/c the pointers
+  //aren't public.
   if(head == NULL){
     Node* node = new Node(student);
     node->setNext(NULL);

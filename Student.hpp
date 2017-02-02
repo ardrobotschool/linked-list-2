@@ -1,4 +1,4 @@
-/*Student class*/
+/*Student class. Holds a student's data.*/
 #ifndef STUDENT_HPP
 #define STUDENT_HPP
 
