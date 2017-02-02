@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void add(Student* &student, Node* &head);
+void add(Student* &student, Node *& head, Node* &curr);
 void print(Node* head);
 bool deleteStudent(int id, Node* &head, Node* null);
 void newStudent(Node* &head);
@@ -52,7 +52,7 @@ int main(){
 	cout << "The list is empty." << endl;
       }
       else{
-	cout << avg(head, 777, 0) << endl;
+	cout << "Average GPA: " << avg(head, 777, 0) << endl;
       }
     }
     else if(strcmp(input, "delete") == 0){
@@ -77,33 +77,60 @@ int main(){
   }
 }
 
-void add(Student* &student, Node* &current){
-  if(current == NULL){ //current == head
+void add(Student* &student, Node *& head, Node* &current){
+  if(head == NULL){
     Node* node = new Node(student);
-    node -> setNext(NULL);
-    current = node;
+    node->setNext(NULL);
+    head = node;
     return;
   }
-  if(current->getNext() == NULL){
-    Node* node = new Node(student);
-    if(student->id >= current->getData()->id){
-      node->setNext(NULL);
+  if(current == head){
+    if(student->id <= head->getData()->id){
+      Node* node = new Node(student);
+      node->setNext(head);
+      head = node;
+      return;
+    }
+    else{
+      if(current->getNext() != NULL){
+	if(student->id <= current->getNext()->getData()->id){
+	  Node* node = new Node(student);
+	  node->setNext(current->getNext());
+	  current->setNext(node);
+	  return;
+	}
+	else{
+	  Node* next = current->getNext();
+	  add(student, head, next);
+	  return;
+	}
+      }
+      else{
+	Node* node = new Node(student);
+	node->setNext(NULL);
+	head->setNext(node);
+	return;
+      }
+    }
+  }
+  else if(current->getNext()!=NULL){
+    if(student->id <= current->getNext()->getData()->id){
+      Node* node = new Node(student);
+      node->setNext(current->getNext());
       current->setNext(node);
+      return;
     }
-    else{ //current == head
-      node->setNext(current);
-      current = node;
+    else{
+      Node* next = current->getNext();
+      add(student, head, next);
+      return;
     }
-    return;
   }
-  if(student->id <= current->getNext()->getData()->id){
+  else{
     Node* node = new Node(student);
-    node->setNext(current->getNext());
+    node->setNext(NULL);
     current->setNext(node);
-    return;
   }
-  Node* next = current->getNext();
-  add(student, next);
 }
 
 void print(Node* current){
@@ -114,6 +141,8 @@ void print(Node* current){
     cout.precision(2);
     cout << current->getData()->gpa << "." << endl;
     print(current->getNext());
+  }
+  else{
     cout << endl;
   }
 }
@@ -157,7 +186,7 @@ void newStudent(Node* &head){
   cin >> gpa;
   cout << endl;
   Student *student = new Student(fname, lname, gpa, id);
-  add(student, head);
+  add(student, head, head);
 }
 
 void eraseAll(Node* &head){
